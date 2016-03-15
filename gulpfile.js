@@ -11,25 +11,43 @@ var eslint = require('gulp-eslint');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 //var jasmine = require('gulp-jasmine-phantom');
+var rename = require('gulp-rename');
 var babel = require('gulp-babel');
 var sourcemaps = require('gulp-sourcemaps');
 
+var jsOrder = [
+    'app/app.module.js',
+    'app/**/*.js',
+    'assets/**/*.js'
+
+];
+
+var vendorJsOrder = [
+    'node_modules/angular/angular.js'
+];
 
 gulp.task('scripts', function() {
-    gulp.src(['app/**/*.js','assets/**/*.js'])
+    gulp.src(jsOrder)
         .pipe(babel())
         .pipe(concat('all.js'))
         .pipe(gulp.dest('dist/assets/js'));
+
+
 });
 
-gulp.task('scripts-dist', function() {
-    gulp.src(['app/**/*.js','assets/**/*.js'])
+gulp.task('scripts-dist',['copy-JS'], function() {
+    gulp.src(jsOrder)
         .pipe(sourcemaps.init())
         .pipe(babel())
         .pipe(concat('all.js'))
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/assets/js'));
+
+
 });
 
 
@@ -48,7 +66,7 @@ gulp.task('styles',function(){
 });
 
 gulp.task('lint', function () {
-    return gulp.src(['**/*.js','!node_modules/**'])
+    return gulp.src(['**/*.js','!node_modules/**','!dist/**/*.js'])
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
@@ -64,13 +82,19 @@ gulp.task('copy-html', function() {
         .pipe(gulp.dest('./dist'));
 });
 
+gulp.task('copy-JS', function() {
+    gulp.src(vendorJsOrder)
+        .pipe(gulp.dest('./dist/assets/vendor/js'));
+});
 
 
 
-gulp.task('default', function() {
-    gulp.watch('sass/**/*scss', ['styles', 'lint', 'copy-images','copy-html']);
-    gulp.watch('**/*.js',['lint']);
-    gulp.watch('/index.html', ['copy-html']);
+
+gulp.task('default', ['styles', 'scripts', 'lint', 'copy-images','copy-html'],function() {
+    gulp.watch('sass/**/*scss', ['styles']);
+    gulp.watch(['**/*.js','!node_modules/**','!dist/**/*.js'],['lint']);
+    gulp.watch('./index.html', ['copy-html']).on('change',browserSync.reload);
+    gulp.watch(['**/*.js','!node_modules/**']).on('change',browserSync.reload);
     browserSync.init({
         server: './dist',
         port: 8080
@@ -84,4 +108,3 @@ gulp.task('dist', [
     'lint',
     'scripts-dist'
 ]);
-
