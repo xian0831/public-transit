@@ -1,3 +1,6 @@
-/**
- * Created by andrew on 3/12/16.
- */
+(function() {
+    'use strict';
+
+    angular
+        .module('transit-app', []);
+})();

@@ -26,7 +26,16 @@ var vendorJsOrder = [
     'node_modules/angular/angular.js'
 ];
 
-gulp.task('scripts', function() {
+
+gulp.task('sw-scripts', function() {
+    gulp.src('assets/js/sw.js')
+        .pipe(babel())
+        .pipe(gulp.dest('dist'));
+
+
+});
+
+gulp.task('scripts', ['sw-scripts'], function() {
     gulp.src(jsOrder)
         .pipe(babel())
         .pipe(concat('all.js'))
@@ -35,7 +44,7 @@ gulp.task('scripts', function() {
 
 });
 
-gulp.task('scripts-dist',['copy-JS'], function() {
+gulp.task('scripts-dist',['copy-JS','sw-scripts'], function() {
     gulp.src(jsOrder)
         .pipe(sourcemaps.init())
         .pipe(babel())
