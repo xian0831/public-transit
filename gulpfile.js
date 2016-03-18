@@ -28,7 +28,7 @@ var vendorJsOrder = [
 
 
 gulp.task('sw-scripts', function() {
-    gulp.src('assets/js/sw.js')
+    gulp.src('sw.js')
         .pipe(babel())
         .pipe(gulp.dest('dist'));
 
