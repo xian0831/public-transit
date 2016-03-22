@@ -11,9 +11,10 @@
     localResourceService.$inject = ['$http'];
 
     function localResourceService($http) {
-        var resource = {
+        var resource;
+        resource = {
             agency: agency
-        }
+        };
 
         function agency() {
             return $http.get('data/agency.json');
