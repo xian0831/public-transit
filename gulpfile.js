@@ -29,7 +29,6 @@ var vendorJsOrder = [
 
 gulp.task('sw-scripts', function() {
     gulp.src('sw.js')
-        .pipe(babel())
         .pipe(gulp.dest('dist'));
 
 
@@ -89,6 +88,9 @@ gulp.task('copy-images', function() {
 gulp.task('copy-html', function() {
     gulp.src('./index.html')
         .pipe(gulp.dest('./dist'));
+
+    gulp.src('app/**/*.html')
+        .pipe(gulp.dest('./dist/app/partials'));
 });
 
 gulp.task('copy-JS', function() {
