@@ -6,7 +6,7 @@
 
     angular
         .module('transit-app')
-        .factor('localResourceService',localResourceService);
+        .factory('localResourceService',localResourceService);
 
     localResourceService.$inject = ['$http'];
 
@@ -20,5 +20,6 @@
             return $http.get('data/agency.json');
         }
 
+        return resource;
     }
 })();
