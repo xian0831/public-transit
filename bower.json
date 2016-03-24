@@ -1,0 +1,18 @@
+{
+  "name": "public-transit",
+  "description": "public transit project for DC subway",
+  "main": "index.js",
+  "authors": [
+    "Andrew Zheng"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/xian0831/public-transit",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
