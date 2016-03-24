@@ -1,0 +1,8 @@
+<div>
+    <input list="stops" name="stops">
+    <datalist id="stops">
+        <option ng-repeat="(index_key, stop) in homeCtrl.stops" value="{{stop.stop_name}}">
+    </datalist>
+    <input type="text" placeholder="Origination">
+    <input type="text" placeholder="Destination">
+</div>

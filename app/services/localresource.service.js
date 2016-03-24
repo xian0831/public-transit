@@ -13,11 +13,16 @@
     function localResourceService($http) {
         var resource;
         resource = {
-            agency: agency
+            agency: agency,
+            stop: stop
         };
 
         function agency() {
             return $http.get('data/agency.json');
+        }
+
+        function stop() {
+            return $http.get('data/stops.txt');
         }
 
         return resource;
