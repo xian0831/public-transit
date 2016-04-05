@@ -26,6 +26,7 @@
         ]
     },
     "globals": {
-        "angular": 1
+        "angular": 1,
+        "Papa": 1
     }
 }
