@@ -16,7 +16,7 @@
 
         self.name = 'a';
 
-        localResourceService.stop().then(function(response){
+        localResourceService.stops().then(function(response){
             return Papa.parse(response.data,{
                 delimiter: ',',
                 header: true
@@ -26,6 +26,8 @@
             self.stops = data;
             $log.log(self.stops);
         });
+
+
     }
 
 })();

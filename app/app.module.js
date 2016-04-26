@@ -5,6 +5,6 @@
         .module('transit-app', ['ui.router']);
 
     angular
-        .modeule('transit-app')
-        .constant('WMATA_API_KEY','6b700f7ea9db408e9745c207da7ca827');
+        .module('transit-app')
+        .constant('WMATA_API_KEY','b8d72d4443d84c0a9acc8c6e4481a3b9');
 })();

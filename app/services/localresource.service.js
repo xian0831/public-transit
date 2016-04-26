@@ -14,15 +14,15 @@
         var resource;
         resource = {
             agency: agency,
-            stop: stop
+            stops: stops
         };
 
         function agency() {
             return $http.get('data/agency.json');
         }
 
-        function stop() {
-            return $http.get('data/stops.txt');
+        function stops() {
+            return $http.get('data/rail_stops.txt');
         }
 
         return resource;
