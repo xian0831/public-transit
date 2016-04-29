@@ -14,7 +14,15 @@
 
         var self = this;
 
-        self.name = 'a';
+        self.getSchedule = function() {
+            var date = new Date();
+            var currentTime = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
+            console.log(currentTime);
+            console.log(findValidTrip(self.originationId, self.destinationId).filter(function(trip){
+                return trip.origTime >= currentTime;
+            }));
+
+        };
 
         localResourceService.stops().then(function(response){
             return Papa.parse(response.data,{
@@ -24,8 +32,58 @@
 
         }).then(function(data){
             self.stops = data;
-            $log.log(self.stops);
         });
+
+        localResourceService.stopTimes().then(function(response){
+            return Papa.parse(response.data,{
+                delimiter: ',',
+                header: true
+            }).data;
+
+        }).then(function(data){
+            self.stopTimes = data;
+            $log.log(self.stopTimes);
+        });
+
+        var findValidTrip = function (origId, distId) {
+            var validTrips = [];
+            var tripId;
+            var origSeq;
+            var origTime;
+
+            for(var i = 0, length = self.stopTimes.length; i < length; i++){
+                if(origId === self.stopTimes[i].stop_id) {
+                    tripId = self.stopTimes[i].trip_id;
+                    origSeq = self.stopTimes[i].stop_sequence;
+                    origTime = self.stopTimes[i].arrival_time;
+                } else if (distId === self.stopTimes[i].stop_id) {
+                    if (tripId === self.stopTimes[i].trip_id && origSeq < self.stopTimes[i].stop_sequence) {
+                        validTrips.push({
+                            tripId : tripId,
+                            origTime: origTime,
+                            distTime: self.stopTimes[i].arrival_time,
+                            duration: getTimeDiff(origTime,self.stopTimes[i].arrival_time)
+
+                        });
+                        console.log(tripId + ' ' + origSeq + ' ' + self.stopTimes[i].stop_sequence);
+                    }
+                }
+
+            }
+
+            return validTrips;
+        };
+
+        //To be completed
+        var getTimeDiff = function (startTime, endTime) {
+            var startTimestamp = startTime.split(':');
+            var endTimestamp = endTime.split(':');
+
+
+
+            return endTimestamp - startTimestamp;
+        };
+
 
 
     }

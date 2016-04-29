@@ -3,11 +3,13 @@
     <!--<datalist id="stops" >-->
         <!--<option ng-repeat="(index_key, stop) in homeCtrl.stops" value="{{stop.stop_name}}">-->
     <!--</datalist>-->
-    <select id="origination">
-        <option ng-repeat="stop in homeCtrl.stops" ng-model="homeCtrl.origination" value="{{stop.stop_id}}">{{stop.stop_name}}</option>
+    <select id="origination" ng-model="homeCtrl.originationId">
+        <option ng-repeat="stop in homeCtrl.stops"  value="{{stop.stop_id}}" >{{stop.stop_name}}</option>
     </select>
-    <select id="destination">
-        <option ng-repeat="stop in homeCtrl.stops" ng-model="homeCtrl.destination" value="{{stop.stop_id}}">{{stop.stop_name}}</option>
+    <select id="destination" ng-model="homeCtrl.destinationId">
+        <option ng-repeat="stop in homeCtrl.stops"  value="{{stop.stop_id}}">{{stop.stop_name}}</option>
     </select>
+    <button ng-click="homeCtrl.getSchedule()">Submit</button>
+    {{homeCtrl.originationId}}
 
 </div>

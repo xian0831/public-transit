@@ -14,7 +14,8 @@
         var resource;
         resource = {
             agency: agency,
-            stops: stops
+            stops: stops,
+            stopTimes: stopTimes
         };
 
         function agency() {
@@ -23,6 +24,10 @@
 
         function stops() {
             return $http.get('data/rail_stops.txt');
+        }
+
+        function stopTimes() {
+            return $http.get('data/rail_stop_time.txt');
         }
 
         return resource;
