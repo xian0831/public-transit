@@ -1,15 +1,54 @@
 <div>
-    <!--<input list="stops" name="stops">-->
-    <!--<datalist id="stops" >-->
-        <!--<option ng-repeat="(index_key, stop) in homeCtrl.stops" value="{{stop.stop_name}}">-->
-    <!--</datalist>-->
-    <select id="origination" ng-model="homeCtrl.originationId">
-        <option ng-repeat="stop in homeCtrl.stops"  value="{{stop.stop_id}}" >{{stop.stop_name}}</option>
-    </select>
-    <select id="destination" ng-model="homeCtrl.destinationId">
-        <option ng-repeat="stop in homeCtrl.stops"  value="{{stop.stop_id}}">{{stop.stop_name}}</option>
-    </select>
-    <button ng-click="homeCtrl.getSchedule()">Submit</button>
-    {{homeCtrl.originationId}}
+    <div class="form-group">
+        <div class="row train-info-input">
+            <label class="control-label col-sm-offset-2 col-sm-2" for="origination">Origination</label>
 
+            <div class="col-sm-6 col-md-4">
+                <select id="origination" class="form-control" ng-model="homeCtrl.originationId">
+                    <option ng-repeat="stop in homeCtrl.stops"  value="{{stop.stop_id}}" >{{stop.stop_name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row train-info-input">
+            <label class="control-label col-sm-offset-2 col-sm-2" for="destination">Destination</label>
+
+            <div class="col-sm-6 col-md-4">
+                <select id="destination"  class="form-control" ng-model="homeCtrl.destinationId">
+                    <option ng-repeat="stop in homeCtrl.stops"  value="{{stop.stop_id}}">{{stop.stop_name}}</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="row train-info-input">
+            <div class="col-sm-6 col-md-4 col-sm-offset-6 col-md-offset-4">
+                <button class="btn btn-success" ng-click="homeCtrl.getSchedule()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Departure Time</th>
+                <th>Arrive Time</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="schedule in homeCtrl.schedules">
+                <td>
+                    {{schedule.origTime}}
+                </td>
+                <td>
+                    {{schedule.distTime}}
+                </td>
+                <td>
+                    {{schedule.duration}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
