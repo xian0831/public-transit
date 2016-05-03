@@ -17,10 +17,9 @@
         self.getSchedule = function() {
             var date = new Date();
             var currentTime = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
-            console.log(currentTime);
-            console.log(findValidTrip(self.originationId, self.destinationId).filter(function(trip){
-                return trip.origTime >= currentTime;
-            }));
+            self.schedules = findValidTrip(self.originationId, self.destinationId).filter(function(trip){
+                return (trip.origTime >= currentTime && trip.origTime < '24:00:00');
+            });
 
         };
 
@@ -79,9 +78,7 @@
             var startTimestamp = startTime.split(':');
             var endTimestamp = endTime.split(':');
 
-
-
-            return endTimestamp - startTimestamp;
+            return ((+endTimestamp[0])*60 + (+endTimestamp[1])) - ((+startTimestamp[0])*60 + (+startTimestamp[1]));
         };
 
 
