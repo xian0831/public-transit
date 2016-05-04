@@ -29,6 +29,13 @@
 
     </div>
 
+    <div class="panel panel-warning" ng-hide="homeCtrl.validRoute">
+        <div class="panel-heading">Invalid Route</div>
+        <div class="panel-body">The destination is not reachable from the origination. Please choose a valid destination. </div>
+    </div>
+
+
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -51,4 +58,6 @@
             </tr>
         </tbody>
     </table>
+
+
 </div>

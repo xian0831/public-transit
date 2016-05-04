@@ -14,6 +14,8 @@
 
         var self = this;
 
+        self.validRoute = true;
+
         self.getSchedule = function() {
             var date = new Date();
             var currentTime = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
@@ -22,6 +24,8 @@
             });
 
         };
+
+
 
         localResourceService.stops().then(function(response){
             return Papa.parse(response.data,{
@@ -64,12 +68,17 @@
                             duration: getTimeDiff(origTime,self.stopTimes[i].arrival_time)
 
                         });
-                        console.log(tripId + ' ' + origSeq + ' ' + self.stopTimes[i].stop_sequence);
+
                     }
                 }
 
             }
-
+            if(validTrips.length === 0) {
+                self.validRoute = false;
+                console.log('The destination is not reachable from the origination.');
+            } else {
+                self.validRoute = true;
+            }
             return validTrips;
         };
 
