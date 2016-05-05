@@ -5,7 +5,7 @@
 
 this.addEventListener('install', function (event) {
     event.waitUntil(
-        caches.open('my-transit-cache-v1').then(function (cache) {
+        caches.open('my-transit-cache-v2').then(function (cache) {
             return cache.addAll([
                 '/',
                 '/index.html',
