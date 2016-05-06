@@ -4,8 +4,8 @@
             <label class="control-label col-sm-offset-2 col-sm-2" for="origination">Origination</label>
 
             <div class="col-sm-6 col-md-4">
-                <select id="origination" class="form-control" ng-model="homeCtrl.originationId">
-                    <option ng-repeat="stop in homeCtrl.stops"  value="{{stop.stop_id}}" >{{stop.stop_name}}</option>
+                <select id="origination" class="form-control" ng-model="originationId">
+                    <option ng-repeat="stop in stops"  value="{{stop.stop_id}}" >{{stop.stop_name}}</option>
                 </select>
             </div>
         </div>
@@ -14,8 +14,8 @@
             <label class="control-label col-sm-offset-2 col-sm-2" for="destination">Destination</label>
 
             <div class="col-sm-6 col-md-4">
-                <select id="destination"  class="form-control" ng-model="homeCtrl.destinationId">
-                    <option ng-repeat="stop in homeCtrl.stops"  value="{{stop.stop_id}}">{{stop.stop_name}}</option>
+                <select id="destination"  class="form-control" ng-model="destinationId">
+                    <option ng-repeat="stop in stops"  value="{{stop.stop_id}}">{{stop.stop_name}}</option>
                 </select>
             </div>
         </div>
@@ -23,11 +23,18 @@
 
         <div class="row train-info-input">
             <div class="col-sm-6 col-md-4 col-sm-offset-6 col-md-offset-4">
-                <button class="btn btn-success" ng-click="homeCtrl.getSchedule()">Submit</button>
+                <button class="btn btn-success" ng-click="getSchedule()">Submit</button>
             </div>
         </div>
 
     </div>
+
+    <div class="panel panel-warning" ng-hide="validRoute">
+        <div class="panel-heading">Invalid Route</div>
+        <div class="panel-body">The destination is not reachable from the origination. Please choose a valid destination. </div>
+    </div>
+
+
 
     <table class="table table-striped">
         <thead>
@@ -38,7 +45,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="schedule in homeCtrl.schedules">
+            <tr ng-repeat="schedule in schedules">
                 <td>
                     {{schedule.origTime}}
                 </td>
@@ -51,7 +58,6 @@
             </tr>
         </tbody>
     </table>
-
 
 
 </div>

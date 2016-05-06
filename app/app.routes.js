@@ -14,8 +14,7 @@
             .state('home', {
                 url: '/home',
                 templateUrl: 'app/partials/home/home.html',
-                controller: 'HomeController',
-                controllerAs: 'homeCtrl'
+                controller: 'HomeController'
             })
 
             .state('about', {});

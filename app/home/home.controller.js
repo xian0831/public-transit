@@ -8,20 +8,19 @@
         .module('transit-app')
         .controller('HomeController',HomeController);
 
-    HomeController.$inject = ['$log','localResourceService'];
+    HomeController.$inject = ['$log','localResourceService','$scope'];
 
-    function HomeController($log, localResourceService) {
+    function HomeController($log, localResourceService, $scope) {
 
-        var self = this;
+        $scope.validRoute = true;
 
-        self.validRoute = true;
-
-        self.getSchedule = function() {
+        $scope.getSchedule = function() {
             var date = new Date();
             var currentTime = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds();
-            self.schedules = findValidTrip(self.originationId, self.destinationId).filter(function(trip){
+            $scope.schedules = findValidTrip($scope.originationId, $scope.destinationId).filter(function(trip){
                 return (trip.origTime >= currentTime && trip.origTime < '24:00:00');
             });
+            $log.log($scope.schedules);
 
         };
 
@@ -34,7 +33,7 @@
             }).data;
 
         }).then(function(data){
-            self.stops = data;
+            $scope.stops = data;
         });
 
         localResourceService.stopTimes().then(function(response){
@@ -44,8 +43,8 @@
             }).data;
 
         }).then(function(data){
-            self.stopTimes = data;
-            $log.log(self.stopTimes);
+            $scope.stopTimes = data;
+            $log.log($scope.stopTimes);
         });
 
         var findValidTrip = function (origId, distId) {
@@ -54,18 +53,18 @@
             var origSeq;
             var origTime;
 
-            for(var i = 0, length = self.stopTimes.length; i < length; i++){
-                if(origId === self.stopTimes[i].stop_id) {
-                    tripId = self.stopTimes[i].trip_id;
-                    origSeq = self.stopTimes[i].stop_sequence;
-                    origTime = self.stopTimes[i].arrival_time;
-                } else if (distId === self.stopTimes[i].stop_id) {
-                    if (tripId === self.stopTimes[i].trip_id && origSeq < self.stopTimes[i].stop_sequence) {
+            for(var i = 0, length = $scope.stopTimes.length; i < length; i++){
+                if(origId === $scope.stopTimes[i].stop_id) {
+                    tripId = $scope.stopTimes[i].trip_id;
+                    origSeq = $scope.stopTimes[i].stop_sequence;
+                    origTime = $scope.stopTimes[i].arrival_time;
+                } else if (distId === $scope.stopTimes[i].stop_id) {
+                    if (tripId === $scope.stopTimes[i].trip_id && origSeq < $scope.stopTimes[i].stop_sequence) {
                         validTrips.push({
                             tripId : tripId,
                             origTime: origTime,
-                            distTime: self.stopTimes[i].arrival_time,
-                            duration: getTimeDiff(origTime,self.stopTimes[i].arrival_time)
+                            distTime: $scope.stopTimes[i].arrival_time,
+                            duration: getTimeDiff(origTime,$scope.stopTimes[i].arrival_time)
 
                         });
 
@@ -74,10 +73,10 @@
 
             }
             if(validTrips.length === 0) {
-                self.validRoute = false;
+                $scope.validRoute = false;
                 console.log('The destination is not reachable from the origination.');
             } else {
-                self.validRoute = true;
+                $scope.validRoute = true;
             }
             return validTrips;
         };
